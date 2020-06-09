@@ -16,22 +16,21 @@ def main():
 	data = load_json_from_file(page_name)
 	thread_container = get_threads_from_json_object(data)
 	"""
-	thread_url = "https://np.reddit.com/r/scandinavia/comments/gzkpzb/risikerer_alle_danskere_der_har_videregivet.json"
-	#content = get_content_from_subreddit(thread_url)
+	thread_url = "https://np.reddit.com/r/Denmark/comments/f303pn/sas_viking_ancestors/"#"https://np.reddit.com/r/scandinavia/comments/gzkpzb/risikerer_alle_danskere_der_har_videregivet.json"
+	content = get_content_from_subreddit(thread_url)
 	page_name = get_page_name_from_url(thread_url)
 	
-	"""
 	page = save_json_to_file(page_name,content)
-	page_obj = load_json_from_file("risikerer_alle_danskere_der_har_videregivet")
+	page_obj = load_json_from_file(page_name)
+
 	base = page_obj[1]['data']['children']
 	container = list()
 	container = get_comments_from_thread_json_object(base,container)
-	container = clean_up_list(container)
+	"""
 	for c in container:
 		c.print_comment()
 	"""
-
-
+	return 0
 
 def get_page_name_from_url(url):
 	"""Returns the page name from the url"""
@@ -49,7 +48,7 @@ def create_json_link_from_url(url):
 
 def utc_to_local(utc_dt):
 	"""Converts utc to datetime type"""
-    return datetime.fromtimestamp(utc_dt / 1e3)
+	return datetime.fromtimestamp(utc_dt / 1e3)
 
 def get_threads_from_json_object(data):
 	"""Get all threads from main subreddit page"""
@@ -66,26 +65,21 @@ def get_threads_from_json_object(data):
 
 	return thread_container
 
-def clean_up_list(container):
-	"""Clean up comments from list, a by product of finding all comments"""
-	new_container = list()
-	for c in container:
-		if not isinstance(c,list):
-			new_container.append(c)
-	return new_container
-
 def get_comments_from_thread_json_object(data, container):
-	"""Recursivly find all comments in json object"""
-	length = len(data)
-	for i in range(length):
+	"""Recursively find all comments in a json object"""
+	for i in range(len(data)):
+		if data[i]['kind'] == "more":
+			continue
 		author = data[i]['data']['author']
 		text = data[i]['data']['body']
 		link = data[i]['data']['permalink']
 		time = utc_to_local(data[i]['data']['created_utc'])
 		container.append(Comment(author,text,time,link))
+		
 		if data[i]['data']['replies'] != "":
 			new_base = data[i]['data']['replies']['data']['children']
-			container.append(get_comments_from_thread_json_object(new_base,container))
+			container + get_comments_from_thread_json_object(new_base,container)
+		
 	return container
 
 def get_content_from_subreddit(subreddit_url):
@@ -117,6 +111,13 @@ def load_json_from_file(page_name):
 		json_obj = json.loads(data)
 		return json_obj
 
-
+#not needed anymore
+def clean_up_list(container):
+	"""Clean up comments from list, a by product of finding all comments"""
+	new_container = list()
+	for c in container:
+		if not isinstance(c,list):
+			new_container.append(c)
+	return new_container
 if __name__ == '__main__':
 	main()
