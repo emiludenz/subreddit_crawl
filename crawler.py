@@ -1,7 +1,5 @@
 import site_crawl 
 import thread_crawl
-from bs4 import BeautifulSoup
-import urllib.request
 import urllib.error
 from classes import *
 import time
