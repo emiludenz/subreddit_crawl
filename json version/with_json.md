@@ -40,10 +40,14 @@ comments_container = new_data[1]['data']['children']
 
 ##Getting number of attributes under 'children'
 
-len(new_data[1]['data']['children'])
+n = len(new_data[1]['data']['children'])
 
-##Going through children will give start comments
+##Going through children will give start comments, i to n
+new_data[1]['data']['children'][i]['data']
+##replies to comment will have the following structur
+new_data[1]['data']['children'][i]['data']['replies']['data']['children'][i]
 
+##it will then follow the pattern
 
 #Function to do things
 ##get all titles from a single page
