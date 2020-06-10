@@ -53,7 +53,7 @@ def create_json_link_from_url(url):
 
 def utc_to_local(utc_dt):
 	"""Converts utc to datetime type"""
-	return datetime.fromtimestamp(utc_dt / 1e3)
+	return datetime.fromtimestamp(utc_dt)
 
 def get_threads_from_json_object(data):
 	"""Get all threads from main subreddit page"""
