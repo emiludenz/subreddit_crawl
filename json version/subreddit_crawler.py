@@ -30,6 +30,8 @@ def main():
 	for c in container:
 		c.print_comment()
 	"""
+	# saving comments to string from class object
+	# https://pythonexamples.org/convert-python-class-object-to-json/
 	return 0
 
 def get_page_name_from_url(url):
