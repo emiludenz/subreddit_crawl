@@ -17,11 +17,12 @@ class Thread():
 		print(f"Title: {self.thread_name}\nPoster: {self.user}\nThread-url:{self.thread_url}\nurl:{self.url}\n\n")
 
 class Comment():
-	def __init__(self, poster, text, date, link):
+	def __init__(self, poster, text, date, link,idx):
 		self.poster = poster
 		self.text = text
 		self.date = date
 		self.link = link
+		self.idx = idx
 	def print_comment(self):
 		print(f"Poster: {self.poster}\tDate: {self.date}\nComment: {self.text}\nLink: {self.link}")
 

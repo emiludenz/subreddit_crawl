@@ -61,6 +61,7 @@ def get_threads_from_json_object(data):
 		perma_link = data['data']['children'][i]['data']['permalink']
 		subreddit_name  = data['data']['children'][i]['data']['subreddit']
 		url =  data['data']['children'][i]['data']['url']
+
 		thread_container.append(Thread(title,perma_link,url,subreddit_name,poster))
 
 	return thread_container
@@ -74,7 +75,8 @@ def get_comments_from_thread_json_object(data, container):
 		text = data[i]['data']['body']
 		link = data[i]['data']['permalink']
 		time = utc_to_local(data[i]['data']['created_utc'])
-		container.append(Comment(author,text,time,link))
+		idx = data[i]['data']['id']
+		container.append(Comment(author,text,time,link,idx))
 		
 		if data[i]['data']['replies'] != "":
 			new_base = data[i]['data']['replies']['data']['children']
