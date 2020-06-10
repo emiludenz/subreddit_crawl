@@ -8,8 +8,8 @@ from datetime import datetime
 
 
 def main():
-	subreddit_url = create_json_link_from_url("https://np.reddit.com/r/scandinavia")
-	page_name = get_page_name_from_url(subreddit_url)
+	#subreddit_url = create_json_link_from_url("https://np.reddit.com/r/scandinavia")
+	#page_name = get_page_name_from_url(subreddit_url)
 	"""
 	content = get_content_from_subreddit(subreddit_url)
 	save_json_to_file(page_name, content)
@@ -22,7 +22,7 @@ def main():
 	
 	page = save_json_to_file(page_name,content)
 	page_obj = load_json_from_file(page_name)
-
+	print(page_name)
 	base = page_obj[1]['data']['children']
 	container = list()
 	container = get_comments_from_thread_json_object(base,container)
@@ -35,8 +35,11 @@ def main():
 def get_page_name_from_url(url):
 	"""Returns the page name from the url"""
 	url = url.split('/')
+	if url[-1] == "":
+		url = url[:-1]
 	if url[-1].endswith(".json"):
-		url[-1] = url[-1].replace(".json","")
+		return url[-1].replace(".json","")
+
 	return url[-1]
 
 def create_json_link_from_url(url):
