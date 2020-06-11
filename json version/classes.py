@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class User():
 	def __init__(self, username):
 		self.username = username
@@ -20,7 +22,7 @@ class Comment():
 	def __init__(self, poster, text, date, link,idx):
 		self.poster = poster
 		self.text = text
-		self.date = date
+		self.date = date.strftime("%m/%d/%Y, %H:%M:%S")
 		self.link = link
 		self.idx = idx
 	def print_comment(self):

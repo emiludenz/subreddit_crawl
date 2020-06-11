@@ -22,7 +22,7 @@ def main():
 	
 	page = save_json_to_file(page_name,content)
 	page_obj = load_json_from_file(page_name)
-	print(page_name)
+	
 	base = page_obj[1]['data']['children']
 	container = list()
 	container = get_comments_from_thread_json_object(base,container)
@@ -30,9 +30,19 @@ def main():
 	for c in container:
 		c.print_comment()
 	"""
+	return 0
+
+
+def save_comments(container,file_name):
 	# saving comments to string from class object
 	# https://pythonexamples.org/convert-python-class-object-to-json/
-	return 0
+	json_string = ""
+	for i in range(len(container)):
+		json_string += json.dumps(container[i].__dict__)
+		json_string += "\n"
+	with open(f"test.json","w") as j:
+		j.writelines(json_string)
+
 
 def get_page_name_from_url(url):
 	"""Returns the page name from the url"""
